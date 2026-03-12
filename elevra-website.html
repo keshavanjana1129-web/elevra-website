@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Elevra.AI — Reflect. Improve. Elevate.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080C24;--card:#0F1330;--card2:#141840;
+  --teal:#00C9D4;--teal2:rgba(0,201,212,.12);
+  --purple:#7C5CFF;--purple2:rgba(124,92,255,.12);
+  --green:#00D68F;--green2:rgba(0,214,143,.10);
+  --amber:#FFB347;--amber2:rgba(255,179,71,.10);
+  --pink:#FF6B9D;--pink2:rgba(255,107,157,.10);
+  --red:#FF5A5F;
+  --text:#FFFFFF;--muted:rgba(255,255,255,.44);
+  --border:rgba(0,201,212,.14);--border2:rgba(255,255,255,.07);
+  --r:22px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;min-height:100vh;}
+
+/* ── AMBIENT BLOBS ── */
+.blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(160px);animation:drift 18s ease-in-out infinite alternate;}
+.b1{width:700px;height:700px;background:rgba(0,201,212,.055);top:-200px;left:-150px;}
+.b2{width:600px;height:600px;background:rgba(124,92,255,.065);bottom:-100px;right:-100px;animation-delay:-9s;}
+.b3{width:350px;height:350px;background:rgba(0,214,143,.04);top:45%;left:35%;animation-delay:-4s;}
+@keyframes drift{0%{transform:translate(0,0) scale(1);}100%{transform:translate(50px,40px) scale(1.1);}}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px 48px;background:rgba(8,12,36,.85);backdrop-filter:blur(28px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:900;font-size:18px;color:#08152a;}
+.logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.3px;}
+.logo-name span{color:var(--teal);}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nb{background:none;border:1px solid transparent;padding:8px 16px;border-radius:20px;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
+.nb:hover,.nb.on{color:var(--teal);border-color:var(--border);background:var(--teal2);}
+.nav-cta{background:var(--teal);color:#08152a!important;border:none;border-radius:20px;padding:9px 22px;font-size:13px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-left:8px;}
+.nav-cta:hover{box-shadow:0 6px 28px rgba(0,201,212,.4);transform:translateY(-1px);}
+
+/* ── PAGES ── */
+.pg{display:none;padding-top:72px;position:relative;z-index:1;}
+.pg.on{display:block;}
+
+/* ══════════════════════════════════════
+   HOME
+══════════════════════════════════════ */
+.hero{min-height:calc(100vh - 72px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:64px 24px 32px;}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--purple2);border:1px solid rgba(124,92,255,.35);border-radius:20px;padding:6px 18px;font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:var(--purple);text-transform:uppercase;margin-bottom:28px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(56px,9.5vw,112px);font-weight:800;line-height:.9;letter-spacing:-3px;margin-bottom:22px;}
+.tc{color:var(--teal);}
+.pc{color:var(--purple);}
+.hero-sub{font-size:clamp(15px,1.8vw,19px);color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:40px;}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:72px;}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#080C24;padding:15px 32px;border-radius:14px;font-size:14px;font-weight:800;border:none;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(0,201,212,.38);}
+.btn-s{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);padding:15px 32px;border-radius:14px;font-size:14px;font-weight:700;border:1px solid var(--border2);cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;}
+.btn-s:hover{border-color:var(--teal);color:var(--teal);background:var(--teal2);}
+
+/* ── 3D PHONES ── */
+.stage{perspective:1200px;width:100%;max-width:920px;height:500px;position:relative;margin:0 auto;}
+.phone{position:absolute;bottom:0;transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.pf{border-radius:38px;overflow:hidden;background:#0a0e2c;border:1.5px solid rgba(255,255,255,.11);}
+
+/* center */
+.ph-c{left:50%;transform:translateX(-50%) translateY(0) rotateY(0) scale(1);z-index:5;}
+.ph-c .pf{width:218px;height:436px;box-shadow:0 60px 120px rgba(0,0,0,.7),0 0 0 1px rgba(0,201,212,.22),0 0 80px rgba(0,201,212,.12);}
+/* L1 */
+.ph-l1{left:50%;transform:translateX(-240px) translateY(44px) rotateY(14deg) scale(.87);z-index:4;}
+.ph-l1 .pf{width:196px;height:392px;box-shadow:0 40px 90px rgba(0,0,0,.6);opacity:.9;}
+/* R1 */
+.ph-r1{left:50%;transform:translateX(44px) translateY(44px) rotateY(-14deg) scale(.87);z-index:4;}
+.ph-r1 .pf{width:196px;height:392px;box-shadow:0 40px 90px rgba(0,0,0,.6);opacity:.9;}
+/* L2 */
+.ph-l2{left:50%;transform:translateX(-380px) translateY(88px) rotateY(22deg) scale(.73);z-index:3;}
+.ph-l2 .pf{width:176px;height:352px;box-shadow:0 30px 70px rgba(0,0,0,.5);opacity:.55;}
+/* R2 */
+.ph-r2{left:50%;transform:translateX(204px) translateY(88px) rotateY(-22deg) scale(.73);z-index:3;}
+.ph-r2 .pf{width:176px;height:352px;box-shadow:0 30px 70px rgba(0,0,0,.5);opacity:.55;}
+
+/* phone screen internals */
+.ps{width:100%;height:100%;padding:14px 11px;overflow:hidden;font-size:9.5px;}
+.ps-h{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:8px;}
+.ps-sm{font-size:8px;color:var(--muted);margin-bottom:10px;}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:9px;}
+.ps-box{background:rgba(255,255,255,.05);border-radius:9px;padding:7px 6px;text-align:center;border:1px solid var(--border);}
+.ps-val{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;}
+.ps-lab{font-size:7.5px;color:var(--muted);margin-top:1px;}
+.ps-card{background:rgba(255,255,255,.04);border-radius:9px;padding:9px;margin-bottom:7px;border:1px solid var(--border);}
+.ps-tag{font-size:7.5px;font-weight:700;letter-spacing:1px;margin-bottom:5px;text-transform:uppercase;}
+.ps-body{font-size:8.5px;color:rgba(255,255,255,.72);line-height:1.55;}
+.ps-mic{width:56px;height:56px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:22px;margin:14px auto 7px;}
+.ps-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.ps-bar{flex:1;height:3.5px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+.ps-fill{height:100%;border-radius:2px;}
+
+/* ── STATS BAR ── */
+.statsbar{display:flex;justify-content:center;gap:64px;padding:52px 24px;flex-wrap:wrap;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.si{text-align:center;}
+.si-n{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;background:linear-gradient(135deg,var(--teal),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.si-l{font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:1.2px;text-transform:uppercase;}
+
+/* ── SECTION ── */
+.sec{max-width:1120px;margin:0 auto;padding:96px 24px;}
+.stag{font-size:10px;font-weight:800;letter-spacing:2.5px;color:var(--teal);text-transform:uppercase;margin-bottom:13px;}
+h2{font-family:'Syne',sans-serif;font-size:clamp(30px,4vw,52px);font-weight:800;line-height:1.04;margin-bottom:16px;}
+.sacc{color:var(--teal);}
+.ssub{font-size:16px;color:var(--muted);line-height:1.72;max-width:540px;margin-bottom:52px;}
+
+/* ── FEATURE GRID ── */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;}
+.fc{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:28px;transition:all .3s;position:relative;overflow:hidden;cursor:default;}
+.fc::after{content:'';position:absolute;inset:0;border-radius:var(--r);background:radial-gradient(circle at 0% 0%,var(--hc,var(--teal)) 0%,transparent 65%);opacity:0;transition:opacity .3s;}
+.fc:hover{transform:translateY(-4px);border-color:var(--hc,var(--teal));box-shadow:0 18px 56px rgba(0,0,0,.3);}
+.fc:hover::after{opacity:.06;}
+.fi{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;position:relative;z-index:1;}
+.ft{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:9px;position:relative;z-index:1;}
+.fd{font-size:13.5px;color:var(--muted);line-height:1.72;position:relative;z-index:1;}
+.ftag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:1px;padding:4px 10px;border-radius:20px;margin-top:13px;text-transform:uppercase;position:relative;z-index:1;}
+
+/* ── STEPS ── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin-top:52px;}
+.step{text-align:center;padding:0 8px;}
+.snum{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin:0 auto 18px;color:#08152a;}
+.stitle{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:9px;}
+.sdesc{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* ── INSIGHT EXAMPLES ── */
+.igrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:40px;}
+.ic{background:var(--card);border:1px solid var(--border2);border-radius:18px;padding:22px;position:relative;overflow:hidden;}
+.ic::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,var(--ca),var(--cb));}
+.itag{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:11px;opacity:.65;}
+.itext{font-size:13.5px;line-height:1.72;color:rgba(255,255,255,.82);margin-bottom:13px;}
+.iaction{font-size:12px;color:var(--teal);font-weight:600;}
+
+/* ── TIMELINE ── */
+.tl{display:flex;flex-direction:column;gap:7px;margin-top:28px;max-width:540px;}
+.tli{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:13px;padding:13px 16px;border:1px solid var(--border2);}
+.tlt{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--muted);width:44px;flex-shrink:0;}
+.tld{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.tla{font-size:13px;font-weight:600;flex:1;}
+.tlb{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;white-space:nowrap;}
+
+/* ── PILLARS ── */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px;margin-top:36px;}
+.pil{background:var(--card);border-radius:16px;padding:20px 16px;border:1px solid var(--border2);text-align:center;transition:all .25s;}
+.pil:hover{transform:translateY(-3px);}
+.pilico{font-size:26px;margin-bottom:11px;}
+.piln{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;}
+.pild{font-size:11.5px;color:var(--muted);line-height:1.6;}
+.pils{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-top:9px;}
+
+/* ── WIN CARDS ── */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:36px;}
+.wc{background:var(--card);border-radius:18px;padding:24px;border:1px solid var(--border2);transition:all .25s;}
+.wc:hover{transform:translateY(-3px);}
+.wico{font-size:32px;margin-bottom:12px;}
+.wt{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:7px;}
+.wd{font-size:13px;color:var(--muted);line-height:1.65;}
+.wb{display:inline-block;font-size:9px;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-top:13px;text-transform:uppercase;}
+
+/* ── PRICING ── */
+.prgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px;margin-top:40px;}
+.prc{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:22px;position:relative;transition:all .3s;}
+.prc.hot{border-color:var(--purple);background:rgba(124,92,255,.06);transform:scale(1.03);}
+.hot-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:8.5px;font-weight:800;letter-spacing:1px;padding:4px 13px;border-radius:20px;white-space:nowrap;}
+.prco{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:13px;}
+.prn{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px;}
+.prs{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.pra{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;margin-bottom:3px;}
+.prper{font-size:10.5px;color:var(--muted);}
+.prhr{height:1px;background:var(--border2);margin:14px 0;}
+.prf{font-size:12px;color:rgba(255,255,255,.72);margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+
+/* ── CTA ── */
+.cta{text-align:center;padding:96px 24px;position:relative;overflow:hidden;}
+.cta-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(0,201,212,.07) 0%,transparent 68%);}
+.cta h2{font-size:clamp(34px,5vw,66px);}
+.cta p{font-size:17px;color:var(--muted);max-width:460px;margin:16px auto 40px;line-height:1.68;}
+.badges{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-top:30px;}
+.badge{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:11px 22px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .22s;}
+.badge:hover{border-color:var(--teal);background:var(--teal2);}
+.bico{font-size:22px;}
+
+/* ── PROSE / PRIVACY ── */
+.prose-wrap{max-width:820px;margin:0 auto;padding:72px 24px;}
+.pcard{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:44px;}
+.pupdated{font-size:10.5px;color:var(--muted);background:var(--teal2);border-left:2.5px solid var(--teal);padding:9px 14px;border-radius:0 7px 7px 0;display:inline-block;margin-bottom:28px;}
+.ph3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--teal);margin:26px 0 10px;display:flex;align-items:center;gap:9px;}
+.pp,.pli{font-size:13.5px;color:rgba(255,255,255,.7);line-height:1.88;}
+.pul{padding-left:20px;margin-top:7px;}
+.pli{margin-bottom:6px;}
+.phr{height:1px;background:var(--border2);margin:22px 0;}
+.pemail{color:var(--teal);font-weight:600;}
+
+/* ── CONTACT ── */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:36px;}
+.ccard{background:var(--card);border:1px solid var(--border2);border-radius:18px;padding:26px;cursor:pointer;text-decoration:none;display:block;transition:all .22s;}
+.ccard:hover{border-color:var(--teal);background:var(--teal2);transform:translateY(-3px);}
+.cico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
+.ct{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:5px;}
+.cd{font-size:12.5px;color:var(--muted);line-height:1.6;}
+.cl{font-size:12.5px;color:var(--teal);font-weight:600;margin-top:11px;display:block;}
+.fcard{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:36px;margin-top:22px;}
+.fcard h3{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;margin-bottom:5px;}
+.fcard p{color:var(--muted);font-size:13.5px;margin-bottom:26px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.fg label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.fg input,.fg select,.fg textarea{background:var(--card2);border:1px solid var(--border2);border-radius:11px;padding:13px 15px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13.5px;outline:none;transition:border-color .18s;resize:none;}
+.fg input:focus,.fg textarea:focus{border-color:var(--teal);}
+.fg select{cursor:pointer;}
+.fg select option{background:var(--card2);}
+.fsub{width:100%;padding:15px;background:var(--teal);color:#08152a;border:none;border-radius:13px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .18s;margin-top:6px;}
+.fsub:hover{box-shadow:0 8px 28px rgba(0,201,212,.3);transform:translateY(-1px);}
+.fok{display:none;text-align:center;padding:22px;background:rgba(0,214,143,.07);border:1px solid rgba(0,214,143,.28);border-radius:13px;margin-top:14px;color:var(--green);font-weight:600;}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;border-top:1px solid var(--border2);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+footer p{font-size:11.5px;color:var(--muted);}
+.flinks{display:flex;gap:18px;}
+.flinks a{font-size:11.5px;color:var(--muted);text-decoration:none;cursor:pointer;transition:color .18s;}
+.flinks a:hover{color:var(--teal);}
+
+/* ── SCROLL FADE ── */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.fade-in.vis{opacity:1;transform:none;}
+
+@media(max-width:900px){
+  nav{padding:13px 18px;}
+  .nb{padding:7px 11px;font-size:12px;}
+  .ph-l2,.ph-r2{display:none;}
+  .ph-l1{transform:translateX(-170px) translateY(36px) rotateY(12deg) scale(.83);}
+  .ph-r1{transform:translateX(8px) translateY(36px) rotateY(-12deg) scale(.83);}
+  .ph-c .pf{width:186px;height:372px;}
+  .statsbar{gap:28px;}
+  .frow{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;padding:22px;}
+  .pcard,.fcard{padding:22px;}
+}
+</style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a class="logo" onclick="go('home')">
+    <div class="logo-mark">E</div>
+    <span class="logo-name">ELEVRA<span>.AI</span></span>
+  </a>
+  <div class="nav-links">
+    <button class="nb on" id="n-home"     onclick="go('home')">Home</button>
+    <button class="nb"    id="n-features" onclick="go('features')">Features</button>
+    <button class="nb"    id="n-pricing"  onclick="go('pricing')">Pricing</button>
+    <button class="nb"    id="n-privacy"  onclick="go('privacy')">Privacy</button>
+    <button class="nb"    id="n-contact"  onclick="go('contact')">Support</button>
+    <button class="nav-cta" onclick="go('contact')">Get Early Access</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     HOME
+══════════════════════════════ -->
+<div class="pg on" id="pg-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="pill"><div class="dot"></div>Now Live on iOS</div>
+    <h1>Your AI<br/><span class="tc">Life</span><br/><span class="pc">Coach</span></h1>
+    <p class="hero-sub">Log your hours. Discover your patterns. Let Elevra's AI turn raw data into the insights that actually change how you perform.</p>
+    <div class="btns">
+      <button class="btn-p" onclick="go('features')">✦ Explore Features</button>
+      <button class="btn-s" onclick="go('pricing')">View Pricing →</button>
+    </div>
+
+    <!-- 3D PHONE SHOWCASE -->
+    <div class="stage" id="stage">
+      <!-- FAR LEFT: Reports -->
+      <div class="phone ph-l2">
+        <div class="pf">
+          <div class="ps">
+            <div class="ps-h">Reports</div>
+            <div class="ps-sm">March 2026</div>
+            <div class="ps-grid">
+              <div class="ps-box"><div class="ps-val" style="color:var(--teal)">34</div><div class="ps-lab">Check-ins</div></div>
+              <div class="ps-box"><div class="ps-val" style="color:var(--teal)">3.6/5</div><div class="ps-lab">Energy</div></div>
+            </div>
+            <div class="ps-grid">
+              <div class="ps-box"><div class="ps-val" style="color:var(--green)">62%</div><div class="ps-lab">Productive</div></div>
+              <div class="ps-box"><div class="ps-val" style="color:var(--purple)">3d</div><div class="ps-lab">Streak</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEFT: Insights -->
+      <div class="phone ph-l1">
+        <div class="pf">
+          <div class="ps">
+            <div class="ps-h">Insights</div>
+            <div class="ps-card" style="border-color:rgba(0,201,212,.25);background:rgba(0,201,212,.06);margin-bottom:8px">
+              <div class="ps-tag" style="color:var(--teal)">🌙 End of Day</div>
+              <div class="ps-body">Close the loop — generate your full reflection to see today's wins, patterns &amp; tomorrow's focus.</div>
+            </div>
+            <div style="background:var(--teal);border-radius:8px;padding:8px;text-align:center;margin-bottom:7px">
+              <span style="font-size:9px;font-weight:800;color:#08152a">🌙 Generate End-of-Day Reflection</span>
+            </div>
+            <div class="ps-card">
+              <div class="ps-tag" style="color:var(--purple)">✨ Daily Reflection · Today</div>
+              <div style="display:flex;align-items:baseline;gap:3px;margin-bottom:4px">
+                <span style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--teal)">7</span>
+                <span style="font-size:7.5px;color:var(--muted)">/10 Elevra Score</span>
+              </div>
+              <div style="font-size:7.5px;color:var(--green);font-weight:700;margin-bottom:3px">⚡ Peak: 15:02 &nbsp; 🔋 Dip: 10:27</div>
+              <div class="ps-body">Crushed afternoon Deep Work at 5/5 energy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER: Home Dashboard -->
+      <div class="phone ph-c">
+        <div class="pf">
+          <div class="ps" style="padding:13px 11px">
+            <div style="background:rgba(0,214,143,.1);border:1px solid rgba(0,214,143,.3);border-radius:8px;padding:7px 9px;margin-bottom:9px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:10px">✅</span>
+              <span style="font-size:8.5px;color:var(--green);font-weight:600">Strong day — 15 check-ins!</span>
+            </div>
+            <div class="ps-grid">
+              <div class="ps-box"><div class="ps-val" style="color:var(--teal);font-size:14px">6/10</div><div class="ps-lab">Score</div></div>
+              <div class="ps-box"><div class="ps-val" style="color:var(--green);font-size:14px">6</div><div class="ps-lab">Productive</div></div>
+            </div>
+            <div class="ps-grid" style="margin-bottom:10px">
+              <div class="ps-box"><div class="ps-val" style="color:var(--amber);font-size:14px">3.7/5</div><div class="ps-lab">Energy</div></div>
+              <div class="ps-box"><div class="ps-val" style="color:var(--purple);font-size:14px">3d</div><div class="ps-lab">Streak</div></div>
+            </div>
+            <div class="ps-card" style="border-color:rgba(124,92,255,.3);background:rgba(124,92,255,.07)">
+              <div class="ps-tag" style="color:var(--purple)">✦ ELEVRA NOTICED</div>
+              <div class="ps-body">You shifted into evening work when your energy was already declining (3/5 by 8:11 PM). Front-load Deep Work to your 3PM peak tomorrow.</div>
+            </div>
+            <div style="font-size:8px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:5px">TODAY'S CHECK-INS</div>
+            <div class="ps-card">
+              <div style="font-size:9.5px;font-weight:700;margin-bottom:2px">Deep Work</div>
+              <div style="font-size:7.5px;color:var(--muted)">Relaxed · Recovering → Technical</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Comm Coach -->
+      <div class="phone ph-r1">
+        <div class="pf">
+          <div class="ps">
+            <div class="ps-h">Comm Coach</div>
+            <div class="ps-sm">Real speech analysis · Powered by Elevra AI</div>
+            <div class="ps-mic">🎤</div>
+            <div style="font-size:9px;text-align:center;font-weight:600;margin-bottom:2px">Tap to start recording</div>
+            <div style="font-size:7.5px;text-align:center;color:var(--muted);margin-bottom:11px">Speak for 10–90 seconds</div>
+            <div style="font-size:7.5px;font-weight:700;letter-spacing:1px;color:var(--muted);margin-bottom:6px">5-PILLAR AVERAGES</div>
+            <div class="ps-row"><span style="font-size:7.5px;width:52px">Cleanliness</span><div class="ps-bar"><div class="ps-fill" style="width:31%;background:var(--teal)"></div></div><span style="font-size:7.5px;color:var(--teal)">31</span></div>
+            <div class="ps-row"><span style="font-size:7.5px;width:52px">Vibe</span><div class="ps-bar"><div class="ps-fill" style="width:28%;background:var(--purple)"></div></div><span style="font-size:7.5px;color:var(--purple)">28</span></div>
+            <div class="ps-row"><span style="font-size:7.5px;width:52px">Compass</span><div class="ps-bar"><div class="ps-fill" style="width:24%;background:var(--amber)"></div></div><span style="font-size:7.5px;color:var(--amber)">24</span></div>
+            <div class="ps-row"><span style="font-size:7.5px;width:52px">Social</span><div class="ps-bar"><div class="ps-fill" style="width:30%;background:var(--pink)"></div></div><span style="font-size:7.5px;color:var(--pink)">30</span></div>
+            <div class="ps-row"><span style="font-size:7.5px;width:52px">Wins</span><div class="ps-bar"><div class="ps-fill" style="width:31%;background:var(--green)"></div></div><span style="font-size:7.5px;color:var(--green)">31</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAR RIGHT: Settings/Credits -->
+      <div class="phone ph-r2">
+        <div class="pf">
+          <div class="ps">
+            <div class="ps-h">Settings</div>
+            <div style="font-size:8px;font-weight:700;letter-spacing:1px;color:var(--muted);margin-bottom:7px">AI CREDITS</div>
+            <div style="background:rgba(255,255,255,.04);border-radius:9px;padding:9px;border:1px solid var(--border);margin-bottom:8px">
+              <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--teal);line-height:1">150</div>
+              <div style="font-size:7.5px;color:var(--muted)">credits remaining</div>
+            </div>
+            <div style="font-size:8px;font-weight:700;letter-spacing:1px;color:var(--muted);margin-bottom:6px">BUY CREDITS</div>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:7px 9px;border:1px solid rgba(124,92,255,.4);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:9px;font-weight:700;color:var(--purple)">100 Credits</span>
+              <span style="font-size:11px;font-weight:800;color:var(--purple)">$10</span>
+            </div>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:7px 9px;border:1px solid rgba(255,179,71,.3);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:9px;font-weight:700;color:var(--amber)">500 Credits</span>
+              <span style="font-size:11px;font-weight:800;color:var(--amber)">$30</span>
+            </div>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:7px 9px;border:1px solid rgba(255,107,157,.3);display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:9px;font-weight:700;color:var(--pink)">Lifetime</span>
+              <span style="font-size:10px;font-weight:800;color:var(--pink)">$50/mo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /stage -->
+  </div><!-- /hero -->
+
+  <!-- STATS -->
+  <div class="statsbar fade-in">
+    <div class="si"><div class="si-n">5</div><div class="si-l">AI Pillars</div></div>
+    <div class="si"><div class="si-n">20</div><div class="si-l">Day Free Trial</div></div>
+    <div class="si"><div class="si-n">24/7</div><div class="si-l">AI Coaching</div></div>
+    <div class="si"><div class="si-n">∞</div><div class="si-l">Pattern Memory</div></div>
+  </div>
+
+  <!-- WHAT ELEVRA DOES -->
+  <div class="sec fade-in">
+    <div class="stag">What Elevra Does</div>
+    <h2>Your personal <span class="sacc">AI mentor</span><br/>lives in your pocket</h2>
+    <p class="ssub">Elevra goes beyond tracking — it learns your unique patterns and delivers insights that genuinely change how you work and live.</p>
+    <div class="fgrid">
+      <div class="fc" style="--hc:var(--teal)"><div class="fi" style="background:var(--teal2)">⚡</div><div class="ft">Hourly Activity Logging</div><div class="fd">Quick 4-tap check-ins every hour. Log what you're doing, energy (1–5), productivity (yes/no), and mood. A floating + button means you can log from anywhere in the app.</div><span class="ftag" style="background:var(--teal2);color:var(--teal)">Core</span></div>
+      <div class="fc" style="--hc:var(--purple)"><div class="fi" style="background:var(--purple2)">🧠</div><div class="ft">AI Daily Reflection</div><div class="fd">At day's end, Elevra analyzes all your logs and generates your personalized summary — Elevra Score, wins, blockers, patterns, peak hours, and tomorrow's suggestion. Download or email it.</div><span class="ftag" style="background:var(--purple2);color:var(--purple)">AI Powered</span></div>
+      <div class="fc" style="--hc:var(--green)"><div class="fi" style="background:var(--green2)">📊</div><div class="ft">Elevra Life Dashboard</div><div class="fd">Your home screen is a live performance command center. Logs recorded, productive hours, Focus Score, Elevra Score, streak, AI insight card, and today's wins — all at a glance.</div><span class="ftag" style="background:var(--green2);color:var(--green)">Dashboard</span></div>
+      <div class="fc" style="--hc:var(--amber)"><div class="fi" style="background:var(--amber2)">🗺️</div><div class="ft">Hourly Productivity Map</div><div class="fd">A visual heat map of every hour — energy, productivity %, and session count. Peak hour and dip hour are clearly marked so you schedule deep work when it counts.</div><span class="ftag" style="background:var(--amber2);color:var(--amber)">Analytics</span></div>
+      <div class="fc" style="--hc:var(--pink)"><div class="fi" style="background:var(--pink2)">🎤</div><div class="ft">Comm Coach</div><div class="fd">Record 10–90 seconds of speech. AI scores you across 5 pillars: Cleanliness, Vibe &amp; Velocity, Compass, Social Level, and Wins &amp; Focus. Track your improvement over 7 days, 30 days, or all time.</div><span class="ftag" style="background:var(--pink2);color:var(--pink)">Speech AI</span></div>
+      <div class="fc" style="--hc:var(--teal)"><div class="fi" style="background:var(--teal2)">🔥</div><div class="ft">Streak &amp; Daily Win System</div><div class="fd">Streaks build momentum. Every day Elevra highlights your one key achievement — Focus Win, Consistency Win, or Productivity Win — to reinforce your best habits automatically.</div><span class="ftag" style="background:var(--teal2);color:var(--teal)">Gamification</span></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="sec fade-in" style="padding-top:0;background:linear-gradient(180deg,transparent,rgba(124,92,255,.03),transparent)">
+    <div class="stag">How It Works</div>
+    <h2>Four steps to<br/><span class="sacc">peak performance</span></h2>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stitle">Log Every Hour</div><div class="sdesc">4-tap check-ins — activity, energy 1–5, productive or not, mood context. Under 10 seconds. Never break flow.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stitle">Elevra Learns You</div><div class="sdesc">After 3+ days, Elevra builds your unique pattern profile — peak hours, energy cycles, productivity triggers, dominant moods.</div></div>
+      <div class="step"><div class="snum">3</div><div class="stitle">Get AI Insights</div><div class="sdesc">Daily reflections, 6-hour snapshots, and hourly maps show exactly where you're winning and precisely where to improve.</div></div>
+      <div class="step"><div class="snum">4</div><div class="stitle">Elevate Daily</div><div class="sdesc">Apply tomorrow's AI suggestion. Track your improvement. Use the Comm Coach to sharpen communication alongside your habits.</div></div>
+    </div>
+  </div>
+
+  <!-- AI INSIGHT EXAMPLES -->
+  <div class="sec fade-in" style="padding-top:0">
+    <div class="stag">Real AI Insights</div>
+    <h2>Insights that feel like<br/><span class="sacc">Elevra knows you</span></h2>
+    <div class="igrid">
+      <div class="ic" style="--ca:var(--teal);--cb:var(--green)">
+        <div class="itag" style="color:var(--teal)">✦ Elevra Noticed</div>
+        <div class="itext">"You shifted into evening work when your energy was already declining (3/5 by 8:11 PM), then tried Deep Work while stressed — that's fighting against your afternoon peak at 15:00."</div>
+        <div class="iaction">→ Front-load Deep Work to your 3PM peak tomorrow</div>
+      </div>
+      <div class="ic" style="--ca:var(--purple);--cb:var(--pink)">
+        <div class="itag" style="color:var(--purple)">📊 Pattern Insight</div>
+        <div class="itext">"You crushed your afternoon Deep Work window at 5/5 energy and maintained strong productivity despite evening fatigue — exceeding your usual 59% rate."</div>
+        <div class="iaction">→ Protect your 2–4 PM calendar from meetings</div>
+      </div>
+      <div class="ic" style="--ca:var(--amber);--cb:var(--red)">
+        <div class="itag" style="color:var(--amber)">⚡ Peak Hour Found</div>
+        <div class="itext">"Your peak is 3PM: 5/5 energy, 100% productive. Your dip is 10AM: 2/5 energy, only 33% productive. Don't schedule important work in your dip window."</div>
+        <div class="iaction">→ Block 2–4 PM daily for deep work</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTIVITY TIMELINE -->
+  <div class="sec fade-in" style="padding-top:0">
+    <div class="stag">Productivity Timeline</div>
+    <h2>See your whole day<br/><span class="sacc">in one scroll</span></h2>
+    <p class="ssub">Color-coded activity timeline shows energy patterns, productivity windows, and focus cycles. Green = peak, yellow = normal, red = depleted.</p>
+    <div class="tl">
+      <div class="tli"><div class="tlt">6 AM</div><div class="tld" style="background:var(--green)"></div><div class="tla">Deep Work</div><span class="tlb" style="background:var(--green2);color:var(--green)">5/5 ⚡ Peak</span></div>
+      <div class="tli"><div class="tlt">9 AM</div><div class="tld" style="background:var(--amber)"></div><div class="tla">Meeting</div><span class="tlb" style="background:var(--amber2);color:var(--amber)">3/5 Normal</span></div>
+      <div class="tli"><div class="tlt">11 AM</div><div class="tld" style="background:var(--teal)"></div><div class="tla">High Focus</div><span class="tlb" style="background:var(--teal2);color:var(--teal)">4/5 Good</span></div>
+      <div class="tli"><div class="tlt">2 PM</div><div class="tld" style="background:var(--red)"></div><div class="tla">Energy Drop</div><span class="tlb" style="background:rgba(255,90,95,.1);color:var(--red)">2/5 Low zzz</span></div>
+      <div class="tli"><div class="tlt">3 PM</div><div class="tld" style="background:var(--green)"></div><div class="tla">Peak Window ⚡</div><span class="tlb" style="background:var(--green2);color:var(--green)">5/5 ⚡ Peak</span></div>
+      <div class="tli"><div class="tlt">8 PM</div><div class="tld" style="background:var(--amber)"></div><div class="tla">Evening Work</div><span class="tlb" style="background:var(--amber2);color:var(--amber)">3/5 Declining</span></div>
+    </div>
+  </div>
+
+  <!-- DAILY WIN SYSTEM -->
+  <div class="sec fade-in" style="padding-top:0">
+    <div class="stag">Daily Win System</div>
+    <h2>Every day ends with<br/><span class="sacc">a win</span></h2>
+    <p class="ssub">Elevra highlights your one key achievement at the end of every day — reinforcing positive behavior and building momentum automatically.</p>
+    <div class="wgrid">
+      <div class="wc"><div class="wico">🧘</div><div class="wt">Focus Win</div><div class="wd">You maintained Deep Work for 2+ consecutive hours today — that's a peak performance session. Your focus threshold is improving.</div><span class="wb" style="background:var(--teal2);color:var(--teal)">Focus Win</span></div>
+      <div class="wc"><div class="wico">📋</div><div class="wt">Consistency Win</div><div class="wd">You logged activities for 9+ hours today — this level of self-awareness is rare and will show in your pattern data within days.</div><span class="wb" style="background:var(--purple2);color:var(--purple)">Consistency Win</span></div>
+      <div class="wc"><div class="wico">🏆</div><div class="wt">Productivity Win</div><div class="wd">You completed key tasks during your actual peak hours today instead of low-energy windows. That's working smarter, not harder.</div><span class="wb" style="background:var(--green2);color:var(--green)">Productivity Win</span></div>
+    </div>
+  </div>
+
+  <!-- COMM COACH PILLARS -->
+  <div class="sec fade-in" style="padding-top:0">
+    <div class="stag">Comm Coach</div>
+    <h2>Master how you<br/><span class="sacc">communicate</span></h2>
+    <p class="ssub">Record 10–90 seconds of speech. Our AI scores you across 5 pillars and tracks your growth over 7 days, 30 days, or all time.</p>
+    <div class="pgrid">
+      <div class="pil" style="border-color:rgba(0,201,212,.25)"><div class="pilico">✨</div><div class="piln" style="color:var(--teal)">Cleanliness</div><div class="pild">Clear words, no filler, articulate delivery</div><div class="pils" style="color:var(--teal)">0–100</div></div>
+      <div class="pil" style="border-color:rgba(124,92,255,.25)"><div class="pilico">⚡</div><div class="piln" style="color:var(--purple)">Vibe &amp; Velocity</div><div class="pild">Pace, energy, and speaking momentum</div><div class="pils" style="color:var(--purple)">0–100</div></div>
+      <div class="pil" style="border-color:rgba(255,179,71,.25)"><div class="pilico">🧭</div><div class="piln" style="color:var(--amber)">Compass</div><div class="pild">Structure, direction, clarity of message</div><div class="pils" style="color:var(--amber)">0–100</div></div>
+      <div class="pil" style="border-color:rgba(255,107,157,.25)"><div class="pilico">🤝</div><div class="piln" style="color:var(--pink)">Social Level</div><div class="pild">Warmth, relatability, and connection</div><div class="pils" style="color:var(--pink)">0–100</div></div>
+      <div class="pil" style="border-color:rgba(0,214,143,.25)"><div class="pilico">🏆</div><div class="piln" style="color:var(--green)">Wins &amp; Focus</div><div class="pild">Confidence, conviction, goal clarity</div><div class="pils" style="color:var(--green)">0–100</div></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta fade-in">
+    <div class="cta-glow"></div>
+    <div class="pill" style="margin-bottom:24px"><div class="dot"></div>Free 20-Day Trial · No Card Required</div>
+    <h2>Start your<br/><span class="tc">performance journey</span><br/>today</h2>
+    <p>20 days completely free. Elevra learns your patterns and delivers insights from day one.</p>
+    <button class="btn-p" style="margin:0 auto" onclick="go('contact')">Get Early Access →</button>
+    <div class="badges">
+      <div class="badge"><span class="bico">🍎</span><span>Available on iOS</span></div>
+      <div class="badge"><span class="bico">🔒</span><span>Privacy First</span></div>
+      <div class="badge"><span class="bico">🧠</span><span>Powered by Claude AI</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     FEATURES
+══════════════════════════════ -->
+<div class="pg" id="pg-features">
+  <div class="sec">
+    <div class="stag">All Features</div>
+    <h2>Everything inside <span class="sacc">Elevra.AI</span></h2>
+    <p class="ssub">A complete AI life intelligence system — not just another habit tracker. Every feature designed to give you an unfair advantage.</p>
+    <div class="fgrid">
+      <div class="fc" style="--hc:var(--teal)"><div class="fi" style="background:var(--teal2)">⚡</div><div class="ft">Hourly Check-Ins</div><div class="fd">4-tap check-ins: activity, energy 1–5, productive yes/no, mood. Floating action button accessible everywhere. Smart notifications every hour to keep you consistent.</div></div>
+      <div class="fc" style="--hc:var(--purple)"><div class="fi" style="background:var(--purple2)">🧠</div><div class="ft">AI Daily Reflection</div><div class="fd">Auto-generated end-of-day summary: Elevra Score 1–10, wins, blockers, patterns, energy trend, peak hours, and tomorrow's AI suggestion. Download as PDF or send to email.</div></div>
+      <div class="fc" style="--hc:var(--green)"><div class="fi" style="background:var(--green2)">🏠</div><div class="ft">Life Dashboard</div><div class="fd">Real-time home command center: Elevra Score, energy score, productivity %, logging streak, AI insight card, Comm Coach summary, and today's full check-in history.</div></div>
+      <div class="fc" style="--hc:var(--amber)"><div class="fi" style="background:var(--amber2)">📸</div><div class="ft">6-Hour Snapshots</div><div class="fd">Mid-day and early evening snapshots compare today vs yesterday side by side. AI observations note patterns shifting in real time — not just at the end of the day.</div></div>
+      <div class="fc" style="--hc:var(--teal)"><div class="fi" style="background:var(--teal2)">🗺️</div><div class="ft">Hourly Productivity Map</div><div class="fd">Visual heat map of every hour: energy color-coded (green ≥4.5, teal ≥3.5, amber ≥2.5, red &lt;2.5), productivity %, and session count. Peak and dip hours clearly flagged.</div></div>
+      <div class="fc" style="--hc:var(--pink)"><div class="fi" style="background:var(--pink2)">🎤</div><div class="ft">Comm Coach</div><div class="fd">AI-powered speech analysis scoring 5 pillars. Bar chart progress over 7 days, 30 days, or all time. Score trend chart. Personalised tips after every session.</div></div>
+      <div class="fc" style="--hc:var(--purple)"><div class="fi" style="background:var(--purple2)">📈</div><div class="ft">Weekly &amp; Monthly Reports</div><div class="fd">Detailed performance reports: day-by-day energy &amp; productivity charts, productive hours breakdown, commitment follow-through %, lifestyle patterns, mental strength stats, and AI analysis.</div></div>
+      <div class="fc" style="--hc:var(--green)"><div class="fi" style="background:var(--green2)">🔥</div><div class="ft">Logging Streak System</div><div class="fd">Consecutive daily logging streaks with 9:30 PM streak-protection reminder. Tracks days active, celebrates milestones, and shows streak history in reports.</div></div>
+      <div class="fc" style="--hc:var(--amber)"><div class="fi" style="background:var(--amber2)">🏆</div><div class="ft">Daily Win System</div><div class="fd">Every day Elevra highlights your one key win — Focus Win, Consistency Win, or Productivity Win — with a specific explanation of what you did well and why it matters.</div></div>
+      <div class="fc" style="--hc:var(--teal)"><div class="fi" style="background:var(--teal2)">🎯</div><div class="ft">3-Hour Commitment Tracking</div><div class="fd">Set your next 3-hour focus at every check-in. Elevra tracks whether you followed through and measures commitment rate automatically — no manual input required.</div></div>
+      <div class="fc" style="--hc:var(--purple)"><div class="fi" style="background:var(--purple2)">🧬</div><div class="ft">Pattern Profile</div><div class="fd">Elevra builds a living profile: peak times, dominant moods, top activities, energy cycles, productivity triggers — referenced in every AI insight to make it feel personal.</div></div>
+      <div class="fc" style="--hc:var(--pink)"><div class="fi" style="background:var(--pink2)">🔔</div><div class="ft">Smart Notifications</div><div class="fd">Hourly motivational tips, 3× daily check-in reminders, 6-hour snapshot alerts, end-of-day reflection prompts, and streak protection notifications — all fully customisable.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PRICING
+══════════════════════════════ -->
+<div class="pg" id="pg-pricing">
+  <div class="sec">
+    <div class="stag">Pricing</div>
+    <h2>Simple, transparent <span class="sacc">credits</span></h2>
+    <p class="ssub">Start with 20 days completely free. Then buy credits when you need them — they never expire.</p>
+
+    <div style="background:var(--teal2);border:1px solid rgba(0,201,212,.3);border-radius:16px;padding:17px 22px;display:flex;align-items:center;gap:13px;margin-bottom:14px;max-width:600px">
+      <span style="font-size:26px">🎁</span>
+      <div><div style="font-weight:700;font-size:14.5px">20-Day Free Trial</div><div style="font-size:12.5px;color:var(--muted);margin-top:2px">All AI features completely free for your first 20 days. No credit card required. Elevra learns your patterns and starts delivering insights from day one.</div></div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:17px 22px;margin-bottom:40px;max-width:600px">
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--muted);margin-bottom:11px">CREDIT COSTS PER FEATURE</div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13.5px;color:rgba(255,255,255,.8)">✨ AI Daily Reflection</span><span style="color:var(--teal);font-weight:700;font-size:12.5px">1 credit</span></div>
+        <div style="height:1px;background:var(--border2)"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13.5px;color:rgba(255,255,255,.8)">🎤 Comm Coach Report</span><span style="color:var(--purple);font-weight:700;font-size:12.5px">2 credits</span></div>
+        <div style="height:1px;background:var(--border2)"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13.5px;color:rgba(255,255,255,.8)">📄 Weekly AI Report</span><span style="color:var(--green);font-weight:700;font-size:12.5px">3 credits</span></div>
+      </div>
+    </div>
+
+    <div class="prgrid">
+      <div class="prc">
+        <div class="prco" style="background:var(--teal2)">⚡</div>
+        <div class="prn" style="color:var(--teal)">Starter</div>
+        <div class="prs">Perfect to begin</div>
+        <div class="pra" style="color:var(--teal)">$5</div>
+        <div class="prper" style="color:var(--teal)">50 credits · $0.10/credit</div>
+        <div class="prhr"></div>
+        <div class="prf">✓ 50 AI Reflections</div>
+        <div class="prf">✓ Credits never expire</div>
+        <div class="prf">✓ All features included</div>
+      </div>
+      <div class="prc hot">
+        <div class="hot-badge">MOST POPULAR</div>
+        <div class="prco" style="background:var(--purple2)">✨</div>
+        <div class="prn" style="color:var(--purple)">Pro Pack</div>
+        <div class="prs">Best for daily use</div>
+        <div class="pra" style="color:var(--purple)">$10</div>
+        <div class="prper" style="color:var(--purple)">100 credits · $0.10/credit</div>
+        <div class="prhr"></div>
+        <div class="prf">✓ 100 AI Reflections</div>
+        <div class="prf">✓ 50 Coach Reports</div>
+        <div class="prf">✓ Credits never expire</div>
+      </div>
+      <div class="prc">
+        <div class="prco" style="background:var(--green2)">⭐</div>
+        <div class="prn" style="color:var(--green)">Power</div>
+        <div class="prs">For serious performers</div>
+        <div class="pra" style="color:var(--green)">$13</div>
+        <div class="prper" style="color:var(--green)">150 credits · $0.09/credit</div>
+        <div class="prhr"></div>
+        <div class="prf">✓ 150 AI Reflections</div>
+        <div class="prf">✓ 75 Coach Reports</div>
+        <div class="prf">✓ Credits never expire</div>
+      </div>
+      <div class="prc">
+        <div class="prco" style="background:var(--amber2)">🏆</div>
+        <div class="prn" style="color:var(--amber)">Elite</div>
+        <div class="prs">Maximum value</div>
+        <div class="pra" style="color:var(--amber)">$30</div>
+        <div class="prper" style="color:var(--amber)">500 credits · $0.06/credit</div>
+        <div class="prhr"></div>
+        <div class="prf">✓ 500 AI Reflections</div>
+        <div class="prf">✓ 250 Coach Reports</div>
+        <div class="prf">✓ Best per-credit rate</div>
+      </div>
+      <div class="prc" style="border-color:rgba(255,107,157,.28);background:rgba(255,107,157,.04)">
+        <div class="prco" style="background:var(--pink2)">∞</div>
+        <div class="prn" style="color:var(--pink)">Lifetime</div>
+        <div class="prs">Unlimited everything</div>
+        <div class="pra" style="color:var(--pink)">$50<span style="font-size:15px">/mo</span></div>
+        <div class="prper" style="color:var(--pink)">Unlimited AI · No limits</div>
+        <div class="prhr"></div>
+        <div class="prf">✓ Unlimited Reflections</div>
+        <div class="prf">✓ Unlimited Coach Sessions</div>
+        <div class="prf">✓ Priority support</div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:12.5px;margin-top:26px">All purchases handled securely via Apple In-App Purchases. Credits never expire. Restore purchases any time in Settings.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PRIVACY
+══════════════════════════════ -->
+<div class="pg" id="pg-privacy">
+  <div class="prose-wrap">
+    <div class="stag">Legal</div>
+    <h2>Privacy <span class="sacc">Policy</span></h2>
+    <p class="ssub" style="margin-bottom:36px">Your data is yours. We're fully transparent about how Elevra.AI collects and uses your information.</p>
+    <div class="pcard">
+      <div class="pupdated">Last updated: March 2026</div>
+      <div class="ph3">📋 Overview</div>
+      <p class="pp">Elevra.AI ("we", "us", "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use the Elevra.AI mobile application ("App").</p>
+      <div class="phr"></div>
+      <div class="ph3">📦 Information We Collect</div>
+      <ul class="pul">
+        <li class="pli"><strong style="color:#fff">Account Information:</strong> Email address and authentication credentials when you create an account (via email or Apple Sign In).</li>
+        <li class="pli"><strong style="color:#fff">Activity Logs:</strong> Check-in data including energy levels, activity type, mood, and productivity flags that you voluntarily submit.</li>
+        <li class="pli"><strong style="color:#fff">Voice Recordings:</strong> Audio submitted to the Comm Coach. Processed for transcription and immediately deleted after analysis — never stored.</li>
+        <li class="pli"><strong style="color:#fff">Usage Data:</strong> App usage patterns and feature interactions to improve performance and personalise insights.</li>
+        <li class="pli"><strong style="color:#fff">Payment Information:</strong> Transactions handled entirely by Apple In-App Purchases. We never store card or payment details.</li>
+      </ul>
+      <div class="phr"></div>
+      <div class="ph3">🔧 How We Use Your Information</div>
+      <ul class="pul">
+        <li class="pli">To provide and personalise your AI coaching experience</li>
+        <li class="pli">To generate AI insights, reflections, and performance summaries</li>
+        <li class="pli">To send push notifications for check-in reminders (with your permission)</li>
+        <li class="pli">To improve the App and develop new features</li>
+        <li class="pli">To respond to support requests and enquiries</li>
+        <li class="pli">To process and verify in-app purchases via Apple</li>
+      </ul>
+      <div class="phr"></div>
+      <div class="ph3">🤝 Third-Party Services</div>
+      <ul class="pul">
+        <li class="pli"><strong style="color:#fff">Supabase:</strong> Secure database and authentication hosting (GDPR compliant)</li>
+        <li class="pli"><strong style="color:#fff">Anthropic (Claude AI):</strong> AI analysis and coaching responses</li>
+        <li class="pli"><strong style="color:#fff">OpenAI (Whisper):</strong> Voice transcription — audio is never stored</li>
+        <li class="pli"><strong style="color:#fff">RevenueCat:</strong> In-app purchase management</li>
+        <li class="pli"><strong style="color:#fff">Apple:</strong> Authentication and payment processing</li>
+      </ul>
+      <div class="phr"></div>
+      <div class="ph3">🔒 Data Security</div>
+      <p class="pp">We implement industry-standard security measures including encrypted data transmission (TLS/SSL), secure cloud storage, and access controls. Your personal data is never sold to third parties.</p>
+      <div class="phr"></div>
+      <div class="ph3">🗑️ Data Deletion</div>
+      <p class="pp">You may request deletion of your account and all associated data at any time by contacting us at <span class="pemail">keshavanjana1129@gmail.com</span>. Deletion requests are processed within 30 days.</p>
+      <div class="phr"></div>
+      <div class="ph3">👶 Children's Privacy</div>
+      <p class="pp">Elevra.AI is not intended for users under the age of 13. We do not knowingly collect personal information from children under 13.</p>
+      <div class="phr"></div>
+      <div class="ph3">✏️ Changes to This Policy</div>
+      <p class="pp">We may update this Privacy Policy from time to time. We will notify you of significant changes via the App or email. Continued use after changes constitutes acceptance.</p>
+      <div class="phr"></div>
+      <div class="ph3">📬 Contact Us</div>
+      <p class="pp">For privacy questions or data deletion requests:<br/><span class="pemail">keshavanjana1129@gmail.com</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CONTACT
+══════════════════════════════ -->
+<div class="pg" id="pg-contact">
+  <div class="prose-wrap" style="max-width:900px">
+    <div class="stag">Support</div>
+    <h2>How can we <span class="sacc">help?</span></h2>
+    <p class="ssub" style="margin-bottom:0">We typically respond within 24 hours. Reach out about credits, bugs, billing, or anything else.</p>
+    <div class="cgrid">
+      <a class="ccard" href="mailto:keshavanjana1129@gmail.com">
+        <div class="cico" style="background:var(--teal2)">📧</div>
+        <div class="ct">Email Support</div>
+        <div class="cd">All enquiries, account issues, and credit questions.</div>
+        <span class="cl">keshavanjana1129@gmail.com →</span>
+      </a>
+      <div class="ccard" onclick="go('privacy')">
+        <div class="cico" style="background:var(--purple2)">🔒</div>
+        <div class="ct">Privacy &amp; Data</div>
+        <div class="cd">Data deletion, privacy questions, and GDPR requests.</div>
+        <span class="cl">View Privacy Policy →</span>
+      </div>
+      <div class="ccard">
+        <div class="cico" style="background:var(--amber2)">💳</div>
+        <div class="ct">Credits &amp; Billing</div>
+        <div class="cd">Purchase issues, credit top-ups, or refund requests.</div>
+        <span class="cl">keshavanjana1129@gmail.com →</span>
+      </div>
+    </div>
+    <div class="fcard">
+      <h3>Send us a message</h3>
+      <p>We'll get back to you within 24 hours.</p>
+      <div id="cform">
+        <div class="frow">
+          <div class="fg"><label>Your Name</label><input type="text" id="fn" placeholder="Jane Smith"/></div>
+          <div class="fg"><label>Email</label><input type="email" id="fe" placeholder="jane@example.com"/></div>
+        </div>
+        <div class="fg">
+          <label>Topic</label>
+          <select id="ft">
+            <option value="">Select a topic...</option>
+            <option>Credits &amp; Billing</option>
+            <option>Bug Report</option>
+            <option>Apple Sign In Issue</option>
+            <option>Feature Request</option>
+            <option>Account &amp; Data</option>
+            <option>General Feedback</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea id="fm" rows="5" placeholder="Describe your issue or question..."></textarea></div>
+        <button class="fsub" onclick="send()">Send Message →</button>
+      </div>
+      <div class="fok" id="fok">✅ Message sent! We'll get back to you within 24 hours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Elevra.AI · Reflect. Improve. Elevate.</p>
+  <div class="flinks">
+    <a onclick="go('home')">Home</a>
+    <a onclick="go('features')">Features</a>
+    <a onclick="go('pricing')">Pricing</a>
+    <a onclick="go('privacy')">Privacy</a>
+    <a onclick="go('contact')">Support</a>
+    <a href="mailto:keshavanjana1129@gmail.com">keshavanjana1129@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+// Page routing
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(n=>n.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  const nb=document.getElementById('n-'+id);
+  if(nb)nb.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  observeFade();
+}
+
+// Scroll fade
+function observeFade(){
+  const els=document.querySelectorAll('.fade-in');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+  },{threshold:.12});
+  els.forEach(el=>{io.observe(el);});
+}
+observeFade();
+window.addEventListener('scroll',observeFade);
+
+// Subtle phone parallax
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const c=document.querySelector('.ph-c');
+  if(c)c.style.transform=`translateX(-50%) translateY(${y*-.04}px)`;
+});
+
+// Contact form
+function send(){
+  const n=document.getElementById('fn').value.trim();
+  const e=document.getElementById('fe').value.trim();
+  const t=document.getElementById('ft').value;
+  const m=document.getElementById('fm').value.trim();
+  if(!n||!e||!m){alert('Please fill in name, email, and message.');return;}
+  const sub=encodeURIComponent('[Elevra Support] '+(t||'General'));
+  const body=encodeURIComponent('Name: '+n+'\nEmail: '+e+'\nTopic: '+t+'\n\nMessage:\n'+m);
+  window.location.href='mailto:keshavanjana1129@gmail.com?subject='+sub+'&body='+body;
+  document.getElementById('cform').style.display='none';
+  document.getElementById('fok').style.display='block';
+}
+</script>
+</body>
+</html>
